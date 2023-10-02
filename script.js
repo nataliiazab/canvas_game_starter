@@ -1,59 +1,97 @@
+// This line logs a message to the browser console.
 console.log("Javascript is running");
 
+// Get a reference to the HTML canvas element and create a 2D drawing context.
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+// Define constants for the width and height of the canvas.
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 
-let playerX = WIDTH / 2 - 30;
-let playerY = HEIGHT - 30;
-//DRAW A RECTANGLE
-function drawPlayer() {
-  ctx.fillStyle = "yellow";
-  ctx.fillReact(playerX, playerY, 60, 30); //left,top,width,height
+// Initialize variables for the player's position and speed.
+let playerX = WIDTH / 2 - 30; // Set the initial horizontal position of the player.
+let playerY = HEIGHT - 30; // Set the initial vertical position of the player.
+const playerSpeed = 5; // Define how fast the player can move.
+
+// Create an array to store information about blue squares.
+const blueSquares = [];
+
+
+
+// Add 10 blue squares to the array.
+for (let i = 0; i < 10; i++) {
+  blueSquares.push({
+    x: i * 60 + 20, // Calculate the horizontal position of each blue square.
+    y: 20, // Set the vertical position of the blue squares at the top.
+    size: 30, // Define the size of each blue square.
+  });
 }
 
+// Function to draw the player's yellow rectangle and the green square on top of it.
+function drawPlayer() {
+  ctx.fillStyle = "yellow"; // Set the fill color to yellow.
+  ctx.fillRect(playerX, playerY, 60, 30); // Draw the yellow rectangle.
+
+ 
+}
+
+// Define a class for bullets fired by the player.
 class Bullet {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.spawnTime = Date.now();
+    this.spawnTime = Date.now(); // Record the time when the bullet was created.
   }
 
+  // Method to draw a red bullet.
   draw(time) {
-    ctx.fillStyle = "red";
-    //find new current position
-    const timePassed = (time - this.spawnTime) / 1000;
-    const y = this.y - timePassed * 100;
-    fillReact(this.x, this.y, 10, 10);
+    ctx.fillStyle = "red"; // Set the fill color to red.
+    const timePassed = (time - this.spawnTime) / 1000; // Calculate time since creation.
+    const y = this.y - timePassed * 100; // Calculate bullet's vertical position.
+    ctx.fillRect(this.x, y, 10, 10); // Draw the red bullet.
   }
 }
 
+// Create an array to store bullets fired by the player.
 const bullets = [];
 
+// Add an event listener to detect when the spacebar is pressed to fire a bullet.
 document.addEventListener("keydown", (event) => {
   if (event.key === " ") {
-    const bullet = new Bullet(playerX + 25, playerY - 10);
-    bullets.push(bullet);
+    const bullet = new Bullet(playerX + 25, playerY - 10); // Create a new bullet.
+    bullets.push(bullet); // Add the bullet to the array.
   }
 });
 
+// Add an event listener to detect arrow key presses to move the player left or right.
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft" && playerX > 0) {
+    playerX -= playerSpeed; // Move the player left if within canvas bounds.
+  } else if (event.key === "ArrowRight" && playerX < WIDTH - 60) {
+    playerX += playerSpeed; // Move the player right if within canvas bounds.
+  }
+});
+
+// Function to display everything on the canvas.
 function display() {
-  //find the current time
-  const tome = Date.now();
-  //update positions
+  const time = Date.now(); // Get the current time.
 
-  //draw everything
-  //clear everything
-  ctx.clearReact(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas.
 
-  //player
-  drawPlayer();
-  //bullets
-  bullets.forEach((bullet) => bullet.draw(time));
-  //call itself again later
+  // Draw blue squares at the top.
+  ctx.fillStyle = "blue"; // Set the fill color to blue.
+  blueSquares.forEach((square) => {
+    ctx.fillRect(square.x, square.y, square.size, square.size); // Draw each blue square.
+  });
+
+  // Draw player and bullets.
+  drawPlayer(); // Draw the player's yellow rectangle and green square.
+  bullets.forEach((bullet) => bullet.draw(time)); // Draw all bullets.
+
+  // Request the next frame for animation.
   requestAnimationFrame(display);
 }
 
+// Start the animation loop.
 display();
