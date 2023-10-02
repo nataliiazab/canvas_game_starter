@@ -14,14 +14,12 @@ const playerWidth = 60;
 const playerHeight = 30;
 const playerSpeed = 18; // how fast the player can move
 
-
 const bulletSpeed = 0.01; // Bullet speed (pixels per millisecond)
 
-
-//  array to store bullets fired by the player
+// Array to store bullets fired by the player
 const bullets = [];
 
-// array to store green squares
+// Array to store green squares
 const greenSquares = [];
 
 // Function to draw the player's yellow rectangle
@@ -70,6 +68,18 @@ function checkBulletCollision() {
   }
 }
 
+// Function to check for game over when a green square touches the bottom of the canvas
+function checkGameOver() {
+  for (let i = 0; i < greenSquares.length; i++) {
+    const greenSquare = greenSquares[i];
+    if (greenSquare.y + greenSquare.height >= HEIGHT) {
+      // Green square reached the bottom
+      gameOver();
+      return;
+    }
+  }
+}
+
 // Function to add a green square to the game
 function addGreenSquare() {
   const x = Math.random() * (WIDTH - 30); // Random horizontal position
@@ -105,6 +115,8 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+let animationId;
+
 // Function to display everything on the canvas
 function display() {
   const time = Date.now(); // Get the current time
@@ -113,6 +125,7 @@ function display() {
 
   drawGreenSquares(); // Draw green squares and move them
   checkBulletCollision(); // Check for collision between bullets and green squares
+  checkGameOver(); // Check for game over condition
 
   // Draw player
   drawPlayer(); // Draw the player's yellow rectangle
@@ -127,10 +140,19 @@ function display() {
     bullet.y = y; // Update bullet position
   }
 
-  // Request the next frame for animation
-  requestAnimationFrame(display);
+  // Request the next frame for animation and store the animation frame ID
+  animationId = requestAnimationFrame(display);
+}
+
+// Function to stop the game and display "Game Over"
+function gameOver() {
+  cancelAnimationFrame(animationId); // Stop the animation loop
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  ctx.fillStyle = "red";
+  ctx.font = "30px Arial";
+  ctx.fillText("Game Over", WIDTH / 2 - 80, HEIGHT / 2);
 }
 
 // Start the animation loop and add green squares at intervals
-display();
-setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
+const addGreenSquareInterval = setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
+display(); // Start the animation loop
