@@ -1,16 +1,25 @@
 body {
-  background-color: aquamarine; /* page background color */
-  color: darkblue; /* the text color */
-  font-family: Georgia, 'Times New Roman', Times, serif; /* the text font */
+  background-color: #3498db; /* Blue background color */
+  color: #ffffff; /* White text color */
+  font-family: Arial, sans-serif; /* Modern sans-serif font */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Remove default margin */
 }
 
 canvas {
-  background-color: black;
+  background-color: #000000; /* Black canvas background color */
+  border: 2px solid #ffffff; /* White border for the canvas */
+  border-radius: 10px; /* Rounded corners */
 }
 
-#timer, #points {
-  font-family: monospace;
+#timer, #score {
+  font-family: 'Roboto Mono', monospace; /* Monospace font for timer and points */
+  font-size: 24px; /* Increase font size */
+
 }
+
+

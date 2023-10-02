@@ -1,5 +1,5 @@
 console.log("Javascript is running");
-
+let score = 0;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -7,20 +7,21 @@ const ctx = canvas.getContext("2d");
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 
-// Player's position and speed.
+// Player's position and speed
 let playerX = WIDTH / 2 - 30; // Initial horizontal position of the player
 const playerY = HEIGHT - 30; // Vertical position of the player
 const playerWidth = 60;
 const playerHeight = 30;
-const playerSpeed = 5; // Define how fast the player can move
+const playerSpeed = 18; // how fast the player can move
 
-// Bullet speed (pixels per millisecond)
-const bulletSpeed = 0.01;
 
-// Create an array to store bullets fired by the player
+const bulletSpeed = 0.01; // Bullet speed (pixels per millisecond)
+
+
+//  array to store bullets fired by the player
 const bullets = [];
 
-// Create an array to store green squares
+// array to store green squares
 const greenSquares = [];
 
 // Function to draw the player's yellow rectangle
@@ -40,7 +41,7 @@ function drawGreenSquares() {
       greenSquare.width,
       greenSquare.height
     );
-    greenSquare.y += 2; // Move green squares down
+    greenSquare.y += 2; // Move green squares down, to change speed for levels later
   }
 }
 
@@ -59,6 +60,10 @@ function checkBulletCollision() {
         greenSquares.splice(j, 1);
         bullets.splice(i, 1);
         i--; // Decrement i to check the next bullet
+
+        // Increase the score
+        score += 10; // score increment
+        document.getElementById("score").textContent = `Score: ${score}`; // Update the score display
         break; // Break the inner loop
       }
     }
