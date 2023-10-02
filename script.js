@@ -14,26 +14,10 @@ let playerX = WIDTH / 2 - 30; // Set the initial horizontal position of the play
 let playerY = HEIGHT - 30; // Set the initial vertical position of the player.
 const playerSpeed = 5; // Define how fast the player can move.
 
-// Create an array to store information about blue squares.
-const blueSquares = [];
-
-
-
-// Add 10 blue squares to the array.
-for (let i = 0; i < 10; i++) {
-  blueSquares.push({
-    x: i * 60 + 20, // Calculate the horizontal position of each blue square.
-    y: 20, // Set the vertical position of the blue squares at the top.
-    size: 30, // Define the size of each blue square.
-  });
-}
-
 // Function to draw the player's yellow rectangle and the green square on top of it.
 function drawPlayer() {
   ctx.fillStyle = "yellow"; // Set the fill color to yellow.
   ctx.fillRect(playerX, playerY, 60, 30); // Draw the yellow rectangle.
-
- 
 }
 
 // Define a class for bullets fired by the player.
@@ -78,12 +62,6 @@ function display() {
   const time = Date.now(); // Get the current time.
 
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas.
-
-  // Draw blue squares at the top.
-  ctx.fillStyle = "blue"; // Set the fill color to blue.
-  blueSquares.forEach((square) => {
-    ctx.fillRect(square.x, square.y, square.size, square.size); // Draw each blue square.
-  });
 
   // Draw player and bullets.
   drawPlayer(); // Draw the player's yellow rectangle and green square.
