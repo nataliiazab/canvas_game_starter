@@ -1,5 +1,8 @@
 console.log("Javascript is running");
+
 let score = 0;
+let highScore = 0;
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -163,9 +166,18 @@ function gameOver() {
   ctx.fillStyle = "red";
   ctx.font = "30px Arial";
   ctx.fillText("Game Over", WIDTH / 2 - 80, HEIGHT / 2);
+  // Update and display the high score
+  if (score > highScore) {
+    highScore = score;
+    document.getElementById(
+      "highScore"
+    ).textContent = `High Score: ${highScore}`;
+  }
+
+  // Reset the score
+  score = 0;
+  document.getElementById("score").textContent = `Score: ${score}`;
 }
-
-
 
 // Start the animation loop
 display();
