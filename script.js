@@ -1,4 +1,4 @@
-console.log("Javascript is running");
+console.log("Javascript is running!!");
 let score = 0;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
