@@ -173,14 +173,14 @@ function gameOver() {
       "record"
     ).textContent = `Record: ${highScore}`;
   }
-
-
 }
+
 
 // Start the animation loop
 display();
 // Add green squares at intervals
 const addGreenSquareInterval = setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
+
 
 
   // // Reset the score
