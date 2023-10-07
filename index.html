@@ -18,11 +18,22 @@
   </head>
   <body>
     <!-- this is the page content -->
-    <h1>Hi👋 Try My Simple Game</h1>
-    <div id="score">Score: 0</div>
-    <!-- <div id="highScore">High Score: <span id="recordScore">0</span></div> -->
-    <div>
-      <canvas id="canvas" width="600" height="700"></canvas>
+    <div id="header">
+      <h1>Hi👋</h1>
+      <h2>Try My Simple Game</h2>
+    </div>
+    <div id="container">
+      <div id="score-container">
+        <div id="score">Score: 0</div>
+        <div id="highScore">High Score: <span id="recordScore">0</span></div>
+      </div>
+      <div id="button-container">
+        <button id="resume-button">Pause/Resume</button>
+        <button id="restartButton">Restart</button>
+      </div>
+      <div>
+        <canvas id="canvas" width="600" height="700"></canvas>
+      </div>
     </div>
   </body>
 </html>

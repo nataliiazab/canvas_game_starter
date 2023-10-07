@@ -10,12 +10,54 @@ body {
   margin: 0;
 }
 
+#header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 canvas {
   background-color: #000000;
   border: 2px solid #ffffff;
   border-radius: 10px;
 }
 
+#score-container {
+  display: flex;
+  flex-direction: row;
+ justify-content: space-around;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
 #score {
   font-size: 24px;
 }
+
+#button-container {
+  text-align: center;
+}
+
+button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#recordScore {
+  font-weight: bold;
+}
+With these styles applied, your HTML content will be centered on the page, and the fonts, colors, and button styles will match the provided CSS rules. Make sure to include the Roboto Mono font in your project for the font-family to work as expected. Adjust the styles further if needed to achieve the desired appearance.
+
+
+
+
+

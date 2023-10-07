@@ -165,6 +165,8 @@ function gameOver() {
   ctx.fillText("Game Over", WIDTH / 2 - 80, HEIGHT / 2);
 }
 
+
+
 // Start the animation loop
 display();
 // Add green squares at intervals
