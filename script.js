@@ -1,4 +1,4 @@
-console.log("Javascript is running");
+console.log("Javascript is running, Yeah! :)");
 
 let score = 0;
 let record = 0;
@@ -42,7 +42,7 @@ function drawGreenSquares() {
       greenSquare.width,
       greenSquare.height
     );
-    greenSquare.y += 2; // Move green squares down, adjust the speed as needed
+    greenSquare.y += 2; // Move green squares down, adjust the speed for levels in the future
   }
 }
 
@@ -159,7 +159,7 @@ function display() {
 
 let animationId;
 
-// Function to stop the game and display "Game Over"
+// Function to stop the game
 function gameOver() {
   cancelAnimationFrame(animationId); // Stop the animation loop
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
@@ -169,20 +169,16 @@ function gameOver() {
   // Update and display the high score
   if (score > record) {
     highScore = score;
-    document.getElementById(
-      "record"
-    ).textContent = `Record: ${highScore}`;
+    document.getElementById("record").textContent = `Record: ${highScore}`;
   }
 }
-
 
 // Start the animation loop
 display();
 // Add green squares at intervals
 const addGreenSquareInterval = setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
 
-
-
-  // // Reset the score
-  // score = 0;
-  // document.getElementById("score").textContent = `Score: ${score}`;
+// use this for restart button:
+// // Reset the score
+// score = 0;
+// document.getElementById("score").textContent = `Score: ${score}`;
