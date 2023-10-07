@@ -1,7 +1,7 @@
 console.log("Javascript is running");
 
 let score = 0;
-let highScore = 0;
+let record = 0;
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -165,21 +165,24 @@ function gameOver() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
   ctx.fillStyle = "red";
   ctx.font = "30px Arial";
-  ctx.fillText("Game Over", WIDTH / 2 - 80, HEIGHT / 2);
+  ctx.fillText(`Game Over`, WIDTH / 2 - 80, HEIGHT / 2);
   // Update and display the high score
-  if (score > highScore) {
+  if (score > record) {
     highScore = score;
     document.getElementById(
-      "highScore"
-    ).textContent = `High Score: ${highScore}`;
+      "record"
+    ).textContent = `Record: ${highScore}`;
   }
 
-  // Reset the score
-  score = 0;
-  document.getElementById("score").textContent = `Score: ${score}`;
+
 }
 
 // Start the animation loop
 display();
 // Add green squares at intervals
 const addGreenSquareInterval = setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
+
+
+  // // Reset the score
+  // score = 0;
+  // document.getElementById("score").textContent = `Score: ${score}`;
