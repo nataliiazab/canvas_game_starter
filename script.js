@@ -1,4 +1,4 @@
-console.log("Javascript is running!!");
+console.log("Javascript is running");
 let score = 0;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -14,7 +14,7 @@ const playerWidth = 60;
 const playerHeight = 30;
 const playerSpeed = 18; // how fast the player can move
 
-const bulletSpeed = 0.01; // Bullet speed (pixels per millisecond)
+const bulletSpeed = 4; // Bullet speed (pixels per frame)
 
 // Array to store bullets fired by the player
 const bullets = [];
@@ -39,30 +39,47 @@ function drawGreenSquares() {
       greenSquare.width,
       greenSquare.height
     );
-    greenSquare.y += 2; // Move green squares down, to change speed for levels later
+    greenSquare.y += 2; // Move green squares down, adjust the speed as needed
   }
 }
 
-// Function to check for collision between bullets and green squares
+// Function to check for collision between bullets and green squares using the SAT method
 function checkBulletCollision() {
-  for (let i = 0; i < bullets.length; i++) {
+  for (let i = bullets.length - 1; i >= 0; i--) {
     const bullet = bullets[i];
-    for (let j = 0; j < greenSquares.length; j++) {
+    for (let j = greenSquares.length - 1; j >= 0; j--) {
       const greenSquare = greenSquares[j];
+
+      // Calculate the half-widths and half-heights of the rectangles
+      const halfBulletWidth = 5;
+      const halfBulletHeight = 5;
+      const halfGreenWidth = greenSquare.width / 2;
+      const halfGreenHeight = greenSquare.height / 2;
+
+      // Calculate the centers of the rectangles
+      const bulletCenterX = bullet.x + halfBulletWidth;
+      const bulletCenterY = bullet.y + halfBulletHeight;
+      const greenCenterX = greenSquare.x + halfGreenWidth;
+      const greenCenterY = greenSquare.y + halfGreenHeight;
+
+      // Calculate the minimum distances between centers before collision
+      const dx = Math.abs(bulletCenterX - greenCenterX);
+      const dy = Math.abs(bulletCenterY - greenCenterY);
+
       if (
-        bullet.x + 10 >= greenSquare.x &&
-        bullet.x <= greenSquare.x + greenSquare.width &&
-        bullet.y <= greenSquare.y + greenSquare.height
+        dx <= halfBulletWidth + halfGreenWidth &&
+        dy <= halfBulletHeight + halfGreenHeight
       ) {
-        // Remove the green square and the bullet upon collision
+        // Collision detected, remove the green square and the bullet
         greenSquares.splice(j, 1);
         bullets.splice(i, 1);
-        i--; // Decrement i to check the next bullet
 
         // Increase the score
-        score += 10; // score increment
-        document.getElementById("score").textContent = `Score: ${score}`; // Update the score display
-        break; // Break the inner loop
+        score += 10;
+        document.getElementById("score").textContent = `Score: ${score}`;
+
+        // Break to avoid checking further collisions for this bullet
+        break;
       }
     }
   }
@@ -100,7 +117,6 @@ document.addEventListener("keydown", (event) => {
     const bullet = {
       x: playerX + playerWidth / 2 - 5,
       y: playerY - 10,
-      spawnTime: Date.now(),
     };
     bullets.push(bullet); // Add the bullet to the array
   }
@@ -115,12 +131,8 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-let animationId;
-
 // Function to display everything on the canvas
 function display() {
-  const time = Date.now(); // Get the current time
-
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
   drawGreenSquares(); // Draw green squares and move them
@@ -134,15 +146,15 @@ function display() {
   ctx.fillStyle = "red";
   for (let i = 0; i < bullets.length; i++) {
     const bullet = bullets[i];
-    const deltaTime = time - bullet.spawnTime; // Time since creation
-    const y = bullet.y - bulletSpeed * deltaTime; // Bullet's vertical position
-    ctx.fillRect(bullet.x, y, 10, 10); // Draw the red bullet
-    bullet.y = y; // Update bullet position
+    bullet.y -= bulletSpeed; // Update bullet position
+    ctx.fillRect(bullet.x, bullet.y, 10, 10); // Draw the red bullet
   }
 
-  // Request the next frame for animation and store the animation frame ID
-  animationId = requestAnimationFrame(display);
+  // Request the next frame for animation
+  requestAnimationFrame(display);
 }
+
+let animationId;
 
 // Function to stop the game and display "Game Over"
 function gameOver() {
@@ -153,6 +165,7 @@ function gameOver() {
   ctx.fillText("Game Over", WIDTH / 2 - 80, HEIGHT / 2);
 }
 
-// Start the animation loop and add green squares at intervals
+// Start the animation loop
+display();
+// Add green squares at intervals
 const addGreenSquareInterval = setInterval(addGreenSquare, 5000); // Add a green square every 5 seconds
-display(); // Start the animation loop
