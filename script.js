@@ -1,7 +1,7 @@
 console.log("Javascript is running, Yeah! :)");
 
 let score = 0;
-let record = 0;
+let record = localStorage.getItem("record") || 0; // Keep player's record in the browser between reloads
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -19,6 +19,11 @@ const playerSpeed = 18; // how fast the player can move
 
 const bulletSpeed = 4; // Bullet speed (pixels per frame)
 
+// Function to update and display the score
+function updateScore() {
+  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("record").textContent = `Record: ${record}`; // Update the record display
+}
 // Array to store bullets fired by the player
 const bullets = [];
 
@@ -152,6 +157,8 @@ function display() {
     bullet.y -= bulletSpeed; // Update bullet position
     ctx.fillRect(bullet.x, bullet.y, 10, 10); // Draw the red bullet
   }
+  // Update and display the score
+  updateScore();
 
   // Request the next frame for animation
   requestAnimationFrame(display);
@@ -168,9 +175,12 @@ function gameOver() {
   ctx.fillText(`Game Over`, WIDTH / 2 - 80, HEIGHT / 2);
   // Update and display the high score
   if (score > record) {
-    highScore = score;
-    document.getElementById("record").textContent = `Record: ${highScore}`;
+    record = score;
+    localStorage.setItem("record", record); // Save the new record in localStorage
   }
+
+  // Update and display the score
+  updateScore();
 }
 
 // Start the animation loop
